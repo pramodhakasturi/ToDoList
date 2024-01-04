@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-do List</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    
+
+    <!--  Stylesheets  -->
+    <link rel="stylesheet" href="/css/home.css">
+
+    <!-- Tailwind and Daisy UI -->
+        <link href="https://cdn.jsdelivr.net/npm/daisyui@2.18.0/dist/full.css" rel="stylesheet" type="text/css" />
+        <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2/dist/tailwind.min.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    
+    <main>
+        <h1>TO-DO LIST</h1>
+        <!-- form to add a task -->
+        <form action="/create-task" method="POST" id="form">
+            <div>
+                <label for="description">DESCRIPTION</label>
+                <textarea name="description" id="description" class="input input-bordered input-secondary" required placeholder="Add a task"></textarea>
+            </div>
+            
+            <div id="additionals">
+                <div>
+                    <label for="category">LABEL</label>
+                    <select name="category" id="category" class="input input-bordered input-secondary" required>
+                        <option value="Personal" selected>Personal</option>
+                        <option value="Work">Work</option>
+                        <option value="House-hold">House-hold</option>
+                        <option value="Shopping">Shopping</option>
+                        <option value="Other" >Other</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label for="date">DEADLINE</label>
+                    <input type="date" name="date" id="date" class="input input-bordered input-secondary" required>
+                </div>
+            </div>
+        </form>
+
+        <!-- buttons to submit the form and delete tasks -->
+        <div id="buttons">
+            <button type="submit" id="add-btn" form="form" class="btn btn-secondary">ADD<i class="fa-solid fa-plus"></i> </button>
+            <button id="delete-btn" class="btn btn-secondary">DELETE<i class="fa-solid fa-trash"></i> </button>
+        </div>
+        
+        <!-- container to display tasks -->
+        <div id="task-container">
+            <%for (let task of tasks_list){%>
+                <!-- Converting date to string -->
+                <%let dt = task.date%>
+                <%let date = new Date(dt).toDateString()%>
+
+                <div class="task-card">
+                    <div class="task-checkbox bg-auto">
+                        <input class="delete-check-box" type="checkbox" name="task-done" value=<%= task.id %>>
+                    </div>
+                    <div class="task-description">
+                        <p><%= task.description%></p>
+                        <p class="date"> <i class="fa-solid fa-calendar"></i> <%= date%></p>
+                    </div>
+                    <div class="category btn btn-secondary">
+                        <p><%= task.category%></p>
+                    </div>
+                </div>
+            <%}%>
+        </div>
+
+    </main>
+
+    <!-- Font Awesome -->
+    <script src="https://kit.fontawesome.com/1dd0c8a742.js" crossorigin="anonymous"></script>
+    <script src="/js/home.js"></script>
+</body>
+</html>
